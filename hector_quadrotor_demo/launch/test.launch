@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+
+<launch>
+
+  <!-- Start Gazebo with wg world running in (max) realtime -->
+  <include file="$(find hector_gazebo_worlds)/launch/world.launch"/>
+  <!-- actual world file being used is world.launch -->
+
+  <!-- Spawn simulated quadrotor uav -->
+  <include file="$(find hector_quadrotor_gazebo)/launch/spawn_quadrotor.launch" >
+    <arg name="model" value="$(find hector_quadrotor_description)/urdf/quadrotor_hokuyo_utm30lx.gazebo.xacro"/>
+    <arg name="controllers" value="
+        controller/attitude
+        controller/velocity
+        controller/position
+        "/>
+
+    <!-- <arg name="x" value="8"/> -->
+    <!-- <arg name="y" value="4"/> -->
+  </include>
+
+  <!-- Start rviz visualization with preset config -->
+  <!-- <node pkg="rviz" type="rviz" name="rviz" args="-d $(find hector_quadrotor_demo)/rviz_cfg/indoor_slam.rviz"/> -->
+  
+  <!-- Launch xbox controller -->
+
+  <include file="$(find hector_quadrotor_teleop)/launch/xbox_controller.launch" >
+    <arg name="control_mode" value="position"/>
+  </include>
+<!-- 
+  Todo:
+  1. Remove excess done!!
+  2. Put an asus or kinect on the robot (prefer kinect)
+  3. start at some given x/y done, sort of...need to turn off the global controller setpoint to make it open loop
+ -->
+
+
+
+</launch>
